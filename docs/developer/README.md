@@ -1,22 +1,17 @@
 # 开发者文档
 
-本目录面向希望为 MioKit 编写、调试、打包或维护插件的开发者。
+本目录面向通过 AI Agent 创建、开发、验证和分发 MioKit 插件的开发者。项目创建与工程检查统一使用 [MioKit.CodeAgent](https://github.com/tiny-isle/MioKit.CodeAgent)：Skill 提供约定与选型，MCP 提供环境检查、创建、校验、打包和验包。
 
 ## 推荐阅读顺序
 
-1. [插件开发指南](plugin-development.md)
-2. [插件清单说明](plugin-manifest.md)
-3. [架构设计](architecture.md)
-4. [调试、打包与发布](debugging-and-packaging.md)
-5. [插件提交检查清单](checklist.md)
+1. [插件开发指南](plugin-development.md)：安装前提、Agent 路由和创建到交付的主流程。
+2. [插件清单说明](plugin-manifest.md)：`plugin.json` 的最小字段、版本规则与 MCP 校验。
+3. [调试、打包与发布](debugging-and-packaging.md)：验包边界与目标宿主验证。
+4. [插件提交检查清单](checklist.md)：交付前的自动化与人工确认项。
+5. [架构设计](architecture.md)：理解宿主、节点树、Feature 与 UI 的协作边界。
 
-## 重要说明
+## 工作边界
 
-当前仓库尚未发布稳定的插件 SDK/API。文档中的待补充字段、接口名称和示例代码不应直接用于生产插件；正式规范发布后，会在对应页面标注适用版本。
+Agent 不手写插件骨架，也不直接运行模板安装或 `dotnet new`；新项目应调用 CodeAgent 的 `create_plugin`。打包完成后必须通过 `inspect_plugin_nupkg`，才可交给用户安装或发布。
 
-## 文档目标
-
-- 让开发者了解插件从创建到发布的完整生命周期。
-- 让插件与 MioKit 宿主之间的职责边界清晰可维护。
-- 让不同 UI 宿主共享同一套核心插件能力。
-- 让插件的配置、脚本和持久化行为保持可替换、可测试。
+CodeAgent 的 Skill 和 MCP schema 是 SDK/API 约定的权威来源。本目录只保留稳定的开发流程和验收要求；节点、生命周期、EAV、搜索、Avalonia 和 WebView2 的细节请按需读取相应 Skill。

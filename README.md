@@ -10,7 +10,6 @@ MioKit 基于以下技术构建：
 - [Avalonia UI](https://avaloniaui.net/)
 - [Vue 3](https://vuejs.org/)
 - [WebView2](https://developer.microsoft.com/microsoft-edge/webview2/)
-- MioKit Plugin SDK
 
 常驻搜索入口使用 Avalonia 构建，配置页、管理页等需要快速迭代的界面使用 Vue 3 与 WebView2 构建。
 
@@ -21,9 +20,6 @@ MioKit 基于以下技术构建：
     <img src="https://get.microsoft.com/images/en-us%20dark.svg" width="200" alt="从 Microsoft Store 获取 MioKit">
   </a>
 </p>
-
-也可以直接打开：[Microsoft Store 中的 MioKit](https://apps.microsoft.com/detail/9n64fzj6nsk3)。
-
 ## MioKit 是什么？
 
 MioKit 是一个以全局搜索框为核心入口的 Windows 效率工作台。

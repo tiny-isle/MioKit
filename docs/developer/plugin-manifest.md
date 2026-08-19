@@ -1,37 +1,53 @@
 # 插件清单说明
 
-> 状态：待补充；以下结构不是已发布的稳定格式。
+`plugin/plugin.json` 描述插件身份、入口程序集和 MioKit SDK 兼容范围。创建模板会生成初始清单；修改后应由 Agent 调用 `validate_plugin_json` 校验，而不是手工猜测字段或版本格式。
 
-插件清单用于描述插件身份、版本、入口、依赖和宿主能力需求。正式字段名、类型、默认值和校验规则待 SDK 确定后补充。
+完整 schema 以 CodeAgent MCP resource `miokit://plugin-json-schema` 和 `miokit-plugin-core` Skill 为准。
 
-## 字段规划
+## 最小有效清单
 
-| 字段 | 类型 | 必填 | 说明 | 状态 |
-| --- | --- | --- | --- | --- |
-| 唯一标识 | 待补充 | 待补充 | 插件的稳定标识 | 待补充 |
-| 显示名称 | 待补充 | 待补充 | 用户界面中显示的名称 | 待补充 |
-| 版本 | 待补充 | 待补充 | 插件自身版本 | 待补充 |
-| 入口 | 待补充 | 待补充 | 插件启动入口 | 待补充 |
-| 宿主版本范围 | 待补充 | 待补充 | 兼容的 MioKit 版本 | 待补充 |
-| 依赖 | 待补充 | 否 | 其他插件或宿主能力依赖 | 待补充 |
-| 权限/能力 | 待补充 | 否 | 插件需要使用的宿主能力 | 待补充 |
+以下字段均为非空字符串且必填：
 
-## 示例
+| 字段 | 用途 |
+| --- | --- |
+| `metadataVersion` | 清单格式版本 |
+| `id` | 稳定的插件唯一标识 |
+| `name` | 插件显示名称 |
+| `assembly` | 包根目录中的插件入口 DLL 文件名 |
+| `minSdkVersion` | 最低兼容 SDK 版本 |
 
 ```json
 {
-  "待补充": "正式 Manifest 格式发布后添加示例"
+  "metadataVersion": "1.0",
+  "id": "com.contoso.plugin.my-plugin",
+  "name": "My Plugin",
+  "assembly": "MyPlugin.dll",
+  "minSdkVersion": "1.0.0"
 }
 ```
 
-上面的内容仅用于占位，不是可供插件加载器使用的有效清单。
+`id` 推荐使用 `com.<组织>.plugin.<短名>` 格式。未确定时，Agent 应先调用 `suggest_plugin_id`，或在 `create_plugin` 中提供 `org` 让工具生成建议值。
 
-## 校验规则
+## 版本规则
 
-待补充：标识格式、版本格式、重复安装行为、缺少字段时的错误信息和依赖解析规则。
+`minSdkVersion` 以及可选的 `maxSdkVersion`、`minHostVersion`、`maxHostVersion` 必须使用 .NET `System.Version` 格式：`major.minor[.build[.revision]]`。例如 `2.0.0` 有效，`2.0.0-beta.1` 无效。
+
+插件发布版本由 NuGet `PackageVersion` 承载，可使用例如 `1.2.0` 或 `1.3.0-beta.1` 的 SemVer。清单中不得出现下列旧发布字段：
+
+- `pluginVersion`
+- `releaseState`
+- `releaseDate`
+
+## 校验流程
+
+1. 让 Agent 修改模板生成的 `plugin/plugin.json`。
+2. 要求 Agent 调用 `validate_plugin_json` 并处理所有 errors。
+3. 打包前再次校验；`pack_plugin` 随后的验包还会确认清单、入口 DLL 和资源在 `.nupkg` 中的位置一致。
+
+清单还可声明图标和依赖等内容。字段语义、私有依赖规则和包内资源约定应直接参照 CodeAgent 的 `miokit-plugin-core` Skill，避免在本站维护重复规范。
 
 ## 相关文档
 
 - [插件开发指南](plugin-development.md)
-- [架构设计](architecture.md)
 - [调试、打包与发布](debugging-and-packaging.md)
+- [MioKit.CodeAgent](https://github.com/tiny-isle/MioKit.CodeAgent)
