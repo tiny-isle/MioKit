@@ -57,7 +57,7 @@
 
 插件的配置、脚本和持久化行为应通过抽象服务完成，不应把具体存储引擎类型暴露给插件业务逻辑。
 
-准确的配置接口、数据目录和迁移策略待补充，相关边界请先阅读[架构原则](architecture.md)。
+准确的配置接口、数据目录和迁移策略待补充；了解节点、插件和宿主扩展边界请先阅读[架构设计](architecture.md)。
 
 ## 6. 调试
 
@@ -77,6 +77,6 @@
 ## 相关文档
 
 - [插件清单说明](plugin-manifest.md)
-- [架构原则](architecture.md)
+- [架构设计](architecture.md)
 - [调试、打包与发布](debugging-and-packaging.md)
 - [插件提交检查清单](checklist.md)

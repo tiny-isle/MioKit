@@ -14,13 +14,14 @@
 - [开发者文档总览](developer/README.md)
 - [插件开发指南](developer/plugin-development.md)
 - [插件清单说明](developer/plugin-manifest.md)
-- [架构原则](developer/architecture.md)
+- [架构设计](developer/architecture.md)
 - [调试、打包与发布](developer/debugging-and-packaging.md)
 - [插件提交检查清单](developer/checklist.md)
 
 ### 社区与项目维护
 
 - [贡献指南](contributing.md)
+- [开源致谢](acknowledgements.md)
 
 ## 文档状态说明
 

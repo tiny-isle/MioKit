@@ -33,5 +33,5 @@
 ## 相关文档
 
 - [插件开发指南](plugin-development.md)
-- [架构原则](architecture.md)
+- [架构设计](architecture.md)
 - [调试、打包与发布](debugging-and-packaging.md)

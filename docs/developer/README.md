@@ -6,7 +6,7 @@
 
 1. [插件开发指南](plugin-development.md)
 2. [插件清单说明](plugin-manifest.md)
-3. [架构原则](architecture.md)
+3. [架构设计](architecture.md)
 4. [调试、打包与发布](debugging-and-packaging.md)
 5. [插件提交检查清单](checklist.md)
 
