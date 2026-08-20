@@ -42,6 +42,7 @@ MioKit 是一个以全局搜索框为核心入口的 Windows 效率工作台。
 - [文档总览](docs/README.md)
 - [用户指南](docs/user-guide.md)
 - [插件开发指南](docs/developer/plugin-development.md)
+- [Agent Skill 与 MCP 配置](docs/developer/plugin-development.md#mcp-安装与配置)
 - [插件清单说明](docs/developer/plugin-manifest.md)
 - [架构原则](docs/developer/architecture.md)
 - [调试、打包与发布](docs/developer/debugging-and-packaging.md)

@@ -1,6 +1,6 @@
 # 插件开发指南
 
-MioKit 插件采用 **AI Agent 优先**的开发流程。开发者描述插件目标、界面和发布需求；Agent 读取 [MioKit.CodeAgent](https://github.com/tiny-isle/MioKit.CodeAgent) 的 Skill 进行技术选型，并调用其 MCP 工具创建、校验、打包和验包。这样可使所有插件使用同一套模板和工程检查规则。
+MioKit 插件采用 **AI Agent 优先**的开发流程。开发者描述插件目标、界面和发布需求；Agent 读取 [MioKit.CodeAgent Skill](https://skills.sh/tiny-isle/MioKit.CodeAgent) 进行技术选型，并调用 [`@tiny-isle/miokit-mcp`](https://www.npmjs.com/package/@tiny-isle/miokit-mcp) 提供的 MCP 工具创建、校验、打包和验包。这样可使所有插件使用同一套模板和工程检查规则。
 
 CodeAgent 是创建和工程校验的权威入口；本页说明工作流，不复制会随 SDK 演进的节点、生命周期和 UI API 细节。
 
@@ -9,20 +9,44 @@ CodeAgent 是创建和工程校验的权威入口；本页说明工作流，不�
 - 安装 CodeAgent Skill：
 
   ```bash
-  npx skills add tiny-isle/MioKit.CodeAgent
+  npx skills add https://github.com/tiny-isle/MioKit.CodeAgent
   ```
 
-- 在 Agent 客户端中启用 `miokit-mcp`，使 Agent 可以调用 CodeAgent 的 MCP 工具。
+- 在 Agent 客户端中启用 `miokit-mcp`，使 Agent 可以调用 CodeAgent 的 MCP 工具。Skill 负责开发规范和技术选型，MCP 负责环境检查、工程操作和产物校验。
 - 标准插件需要本机 .NET 10 SDK。
 - WebView2 + Vue 插件还需要 Microsoft Edge WebView2 Runtime；缺少 `pnpm` 只会产生警告，但在构建前端资源时仍需补齐。
 
 ### MCP 安装与配置
 
-> 待补充：此处将提供 MCP 安装命令与各 Agent 客户端的连接配置。请在命令发布前不要自行推测或替换该配置。
+MCP 服务需要 Node.js 20 或更高版本。它通过 stdio 与 Agent 客户端通信，不需要端口或 `cwd` 配置。
 
-```text
-# 待补充：MioKit MCP 安装与客户端注册命令
+以 Cursor 为例，在项目的 `.cursor/mcp.json` 或用户级 MCP 配置中加入：
+
+```json
+{
+  "mcpServers": {
+    "miokit-mcp": {
+      "command": "npx",
+      "args": ["-y", "@tiny-isle/miokit-mcp@latest"]
+    }
+  }
+}
 ```
+
+保存后重启或重新加载 Agent 客户端。若需要固定版本，可将 `@latest` 替换为已验证的版本号，例如 `@0.0.2`。
+
+MCP 提供的主要工具包括：
+
+| 工具 | 用途 |
+| --- | --- |
+| `check_dev_environment` | 检查 .NET SDK，以及 WebView2 插件所需的 Runtime |
+| `ensure_plugin_templates` | 准备 MioKit 官方插件模板 |
+| `suggest_plugin_id` / `generate_guid` | 生成稳定的插件 ID 和 GUID |
+| `create_plugin` | 创建标准插件或 WebView2 插件工程 |
+| `validate_plugin_json` | 校验 `plugin.json` |
+| `pack_plugin` / `inspect_plugin_nupkg` | 打包并检查 NuGet 插件包 |
+
+MCP 只在本机执行开发环境检查、模板准备、文件创建和打包检查，不会自动上传 NuGet 包、提交插件市场或控制正在运行的 MioKit。请只在信任的 Agent 客户端和工作区中启用它。
 
 ## 2. Agent 路由与模板选择
 

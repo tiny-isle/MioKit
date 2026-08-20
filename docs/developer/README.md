@@ -1,6 +1,8 @@
 # 开发者文档
 
-本目录面向通过 AI Agent 创建、开发、验证和分发 MioKit 插件的开发者。项目创建与工程检查统一使用 [MioKit.CodeAgent](https://github.com/tiny-isle/MioKit.CodeAgent)：Skill 提供约定与选型，MCP 提供环境检查、创建、校验、打包和验包。
+本目录面向通过 AI Agent 创建、开发、验证和分发 MioKit 插件的开发者。项目创建与工程检查统一使用 [MioKit.CodeAgent](https://github.com/tiny-isle/MioKit.CodeAgent)：[Skill](https://skills.sh/tiny-isle/MioKit.CodeAgent) 提供约定与选型，[`@tiny-isle/miokit-mcp`](https://www.npmjs.com/package/@tiny-isle/miokit-mcp) 提供环境检查、创建、校验、打包和验包。
+
+首次使用建议先阅读[插件开发指南](plugin-development.md)中的 Skill 安装和 MCP 配置说明。
 
 ## 推荐阅读顺序
 
